@@ -10,6 +10,7 @@ const handler = async (req, res) => {
 
 	const customer = await stripe.customers.create({
 		email: req.body.record.email,
+    name: req.body.record.jmeno
 	});
 
 	await supabase
