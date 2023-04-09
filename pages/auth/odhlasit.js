@@ -1,15 +1,10 @@
-import { supabase } from '@/utils/supabase';
+import { useUzivatel } from '@/context/uzivatel';
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 export default function Prihlasit() {
-   const router = useRouter();
+	const { odhlasit } = useUzivatel();
 	useEffect(() => {
-		const logout = async () => {
-         await supabase.auth.signOut();
-         router.push('/')
-      }
-      logout();
+		odhlasit();
 	}, []);
 
 	return <h1>Probíhá odhlašování</h1>;

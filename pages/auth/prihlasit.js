@@ -1,11 +1,10 @@
-import { supabase } from '@/utils/supabase';
+import { useUzivatel } from '@/context/uzivatel';
 import { useEffect } from 'react';
 
 export default function Prihlasit() {
+	const { prihlasit } = useUzivatel();
 	useEffect(() => {
-		supabase.auth.signInWithOAuth({
-			provider: 'google',
-		});
+		prihlasit();
 	}, []);
 
 	return <h1>Probíhá přihlašování</h1>;
