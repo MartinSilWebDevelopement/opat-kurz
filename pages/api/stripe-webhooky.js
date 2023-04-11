@@ -28,7 +28,7 @@ const handler = async (req, res) => {
 				.update({ odebira: true, jail: false })
 				.eq('stripe_customer_id', event.data.object.customer);
 			break;
-		case 'customer.subscription.updated':
+		case 'customer.subscription.deleted':
 			await supabase
 				.from('profil')
 				.update({ odebira: false, jail: true  })
