@@ -1,4 +1,4 @@
-import { supabase } from '@/utils/supabase';
+import { getServiceSupabase } from '@/utils/supabase';
 import initStripe from 'stripe';
 
 const handler = async (req, res) => {
@@ -12,6 +12,8 @@ const handler = async (req, res) => {
 		email: req.body.record.email,
     name: req.body.record.jmeno
 	});
+
+	const supabase = getServiceSupabase();
 
 	await supabase
 		.from('profil')
