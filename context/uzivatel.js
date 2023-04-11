@@ -7,6 +7,7 @@ const Context = createContext();
 const Provider = ({ children }) => {
 	const router = useRouter();
 	const [uzivatel, setUzivatel] = useState(null);
+	const [nacita, setNacita] = useState(true);
 
 	useEffect(() => {
 		const ziskatUzivatelskyProfil = async () => {
@@ -23,6 +24,7 @@ const Provider = ({ children }) => {
 					...profil,
 				});
 			}
+			setNacita(false);
 		};
 
 		ziskatUzivatelskyProfil();
@@ -43,6 +45,7 @@ const Provider = ({ children }) => {
 		uzivatel,
 		prihlasit,
 		odhlasit,
+		nacita,
 	};
 
 	return <Context.Provider value={exposed}>{children}</Context.Provider>;
