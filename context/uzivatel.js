@@ -30,6 +30,30 @@ const Provider = ({ children }) => {
 		ziskatUzivatelskyProfil();
 	}, [router]);
 
+	useEffect(() => {
+		if (uzivatel) {
+			const profil = supabase
+				.channel('custom-update-channel')
+				.on(
+					'postgres_changes',
+					{
+						event: 'UPDATE',
+						schema: 'public',
+						table: 'profil',
+						filter: `id=eq.${uzivatel.id}`,
+					},
+					(payload) => {
+						setUzivatel({ ...uzivatel, ...payload.new });
+					}
+				)
+				.subscribe();
+
+			return () => {
+				supabase.removeChannel(profil);
+			};
+		}
+	}, [uzivatel]);
+
 	const prihlasit = async () => {
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
