@@ -1,5 +1,5 @@
 import { getServiceSupabase, supabase } from '@/utils/supabase';
-import { JWT } from '@mux/mux-node';
+import Mux from '@mux/mux-node';
 import MuxPlayer from '@mux/mux-player-react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -65,13 +65,10 @@ export async function getServerSideProps({ params }) {
 	if (lekce.playback_id) {
 		const playbackId = lekce.playback_id;
 
-		let baseOptions = {
+		const token = Mux.JWT.signPlaybackId(playbackId, {
 			keyId: process.env.MUX_SECRET_KEY_ID,
 			keySecret: process.env.MUX_SECRET_BASE,
-			expiration: '1d',
-		};
-
-		const token = JWT.sign(playbackId, { ...baseOptions, type: 'video' });
+		});
 
 		return {
 			props: { slug: slug, accessToken: token },
