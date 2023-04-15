@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-export default function Lekce({ slug, accessToken, playback }) {
+export default function Lekce({ slug, url }) {
 	const router = useRouter();
 	const [lekce, setLekce] = useState(null);
 
@@ -41,7 +41,8 @@ export default function Lekce({ slug, accessToken, playback }) {
 								video_id: lekce.slug,
 								video_title: lekce.nazev,
 							}}
-							playbackId={`${playback}?token=${accessToken}`}
+							src={url}
+							type='hls'
 						/>
 					</div>
 					<div dangerouslySetInnerHTML={{ __html: lekce.obsah }} />
@@ -71,9 +72,10 @@ export async function getServerSideProps({ params }) {
 			keyId: process.env.MUX_SECRET_KEY_ID,
 			keySecret: process.env.MUX_SECRET_BASE,
 		});
+		const videourl = `https://stream.mux.com/${lekce.playback_id}.m3u8?token=${token}`
 
 		return {
-			props: { slug: slug, accessToken: token, playback: lekce.playback_id },
+			props: { slug: slug, url: videourl },
 		};
 	}
 
