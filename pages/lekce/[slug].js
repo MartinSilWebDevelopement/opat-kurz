@@ -37,7 +37,10 @@ export default function Lekce({ slug, accessToken }) {
 					</Head>
 					<h1>{lekce.nazev}</h1>
 					<div style={{ width: '40vw', height: 'auto' }}>
-						<MuxPlayer streamType="on-demand" src={`https://stream.mux.com/${lekce.playback_id}.m3u8?token=${accessToken}`} />
+						<MuxPlayer
+							streamType="on-demand"
+							src={`https://stream.mux.com/${lekce.playback_id}.m3u8?token=${accessToken}`}
+						/>
 					</div>
 					<div dangerouslySetInnerHTML={{ __html: lekce.obsah }} />
 				</>
@@ -51,7 +54,9 @@ export default function Lekce({ slug, accessToken }) {
 export async function getServerSideProps({ params }) {
 	const slug = params.slug;
 
-	const { data: lekce } = await getServiceSupabase
+	const supabase = getServiceSupabase();
+
+	const { data: lekce } = await supabase
 		.from('lekce')
 		.select('playback_id')
 		.eq('slug', params.slug)
@@ -67,49 +72,13 @@ export async function getServerSideProps({ params }) {
 		};
 
 		const token = JWT.sign(playbackId, { ...baseOptions, type: 'video' });
+
+		return {
+			props: { slug: slug, accessToken: token },
+		};
 	}
 
 	return {
-		props: { slug: slug, accessToken: token },
+		props: { slug: slug },
 	};
 }
-
-// import { supabase } from '@/utils/supabase';
-// import MuxPlayer from '@mux/mux-player-react';
-// import Head from 'next/head';
-
-// export default function Lekce({ lekce }) {
-// 	return (
-// 		<>
-// 			<Head>
-// 				<title>{lekce.nazev}</title>
-// 			</Head>
-// 			<h1>{lekce.nazev}</h1>
-// 			<div style={{ width: '40vw', height: 'auto' }}>
-// 				<MuxPlayer streamType="on-demand" playbackId={lekce.playback_id} />
-// 			</div>
-// 			<div dangerouslySetInnerHTML={{ __html: lekce.obsah }} />
-// 		</>
-// 	);
-// }
-
-// export async function getServerSideProps({ params }) {
-// 	const { data: lekce } = await supabase
-// 		.from('lekce')
-// 		.select(`*`)
-// 		.eq('slug', params.slug)
-// 		.single();
-
-// 	if (!lekce || lekce.length === 0) {
-// 		return {
-// 			redirect: {
-// 				destination: '/lekce/neexistuje',
-// 				permanent: false,
-// 			},
-// 		};
-// 	}
-
-// 	return {
-// 		props: { lekce },
-// 	};
-// }
