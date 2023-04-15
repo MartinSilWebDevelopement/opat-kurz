@@ -11,6 +11,7 @@
   "dependencies": {
     "@mux/mux-node": "^7.3.0",
     "@mux/mux-player-react": "^1.9.0",
+    "@mux/mux-video-react": "^0.7.9",
     "@stripe/stripe-js": "^1.52.0",
     "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/supabase-js": "^2.15.0",

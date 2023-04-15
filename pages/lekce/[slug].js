@@ -1,6 +1,6 @@
 import { getServiceSupabase, supabase } from '@/utils/supabase';
 import Mux from '@mux/mux-node';
-import MuxPlayer from '@mux/mux-player-react';
+import MuxVideo from '@mux/mux-video-react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -8,8 +8,6 @@ import { useEffect, useState } from 'react';
 export default function Lekce({ slug, accessToken }) {
 	const router = useRouter();
 	const [lekce, setLekce] = useState(null);
-
-	console.log(accessToken);
 
 	useEffect(() => {
 		const fetchLekceContent = async () => {
@@ -37,9 +35,10 @@ export default function Lekce({ slug, accessToken }) {
 					</Head>
 					<h1>{lekce.nazev}</h1>
 					<div style={{ width: '40vw', height: 'auto' }}>
-						<MuxPlayer
+						<MuxVideo
 							streamType="on-demand"
-							src={`https://stream.mux.com/${lekce.playback_id}.m3u8?token=${accessToken}`}
+							playbackId={`${lekce.playback_id}?token=${accessToken}`}
+							controls
 						/>
 					</div>
 					<div dangerouslySetInnerHTML={{ __html: lekce.obsah }} />
