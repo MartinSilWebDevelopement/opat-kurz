@@ -63,12 +63,12 @@ export async function getServerSideProps({ params }) {
 		.single();
 
 	if (lekce.playback_id) {
-		const playbackId = playback_id;
+		const playbackId = lekce.playback_id;
 
 		let baseOptions = {
 			keyId: process.env.MUX_SECRET_KEY_ID,
 			keySecret: process.env.MUX_SECRET_BASE,
-			expiration: '7d',
+			expiration: '1d',
 		};
 
 		const token = JWT.sign(playbackId, { ...baseOptions, type: 'video' });
