@@ -21,20 +21,16 @@ export default function Lekce({ slug }) {
 			if (!error) {
 				const user = await supabase.auth.getUser();
 				if (user.data.user) {
-					const body = {
-						slug: slug,
-						userid: user.data.user.id,
-					};
-
-					const { data } = await axios.post(
-						`${process.env.NEXT_PUBLIC_DOMAIN}/api/ziskat-video-url`,
-						body,
-						{
-							headers: {
-								'Content-Type': 'application/json',
-							},
+					const { data } = await axios.post('/api/ziskat-video-url', {
+						data: {
+							 slug: slug,
+							 userid: user.data.user.id
 						}
-					);
+				  }, {
+						headers: {
+							 'Content-Type': 'application/json'
+						}
+				  })
 					if(data.url) {
 						setPlayUrl(data.url);
 					}
