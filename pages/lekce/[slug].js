@@ -1,9 +1,9 @@
-import {  supabase } from '@/utils/supabase';
+import { supabase } from '@/utils/supabase';
 import MuxVideo from '@mux/mux-video-react';
+import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 export default function Lekce({ slug }) {
 	const router = useRouter();
@@ -19,22 +19,27 @@ export default function Lekce({ slug }) {
 				.eq('slug', slug)
 				.single();
 			if (!error) {
+				setLekce(lekce);
 				const user = await supabase.auth.getUser();
 				if (user.data.user) {
-					const { data } = await axios.post('/api/ziskat-video-url', {
-						data: {
-							 slug: slug,
-							 userid: user.data.user.id
+					const { data } = await axios.post(
+						'/api/ziskat-video-url',
+						{
+							data: {
+								slug: slug,
+								userid: user.data.user.id,
+							},
+						},
+						{
+							headers: {
+								'Content-Type': 'application/json',
+							},
 						}
-				  }, {
-						headers: {
-							 'Content-Type': 'application/json'
-						}
-				  })
-					if(data.url) {
+					);
+					if (data.url) {
 						setPlayUrl(data.url);
 					}
-					setLekce(lekce);
+					
 					setNacita(false);
 				} else {
 					router.push('/auth/prihlasit');
@@ -52,21 +57,21 @@ export default function Lekce({ slug }) {
 			{nacita ? (
 				<>
 					<Head>
-						<title>{lekce.nazev}</title>
+						<title>{lekce?.nazev}</title>
 					</Head>
-					<h1>{lekce.nazev}</h1>
+					<h1>{lekce?.nazev}</h1>
 					<div style={{ width: '40vw', height: 'auto' }}>
 						<MuxVideo
 							controls
 							metadata={{
-								video_id: lekce.slug,
-								video_title: lekce.nazev,
+								video_id: lekce?.slug,
+								video_title: lekce?.nazev,
 							}}
 							src={playUrl}
 							type="hls"
 						/>
 					</div>
-					<div dangerouslySetInnerHTML={{ __html: lekce.obsah }} />
+					<div dangerouslySetInnerHTML={{ __html: lekce?.obsah }} />
 				</>
 			) : (
 				<p>Načítá se</p>
@@ -76,7 +81,8 @@ export default function Lekce({ slug }) {
 }
 
 export async function getServerSideProps({ params }) {
+	const slug = params.slug;
 	return {
-		props: { slug: params.slug },
+		props: { slug: slug },
 	};
 }
