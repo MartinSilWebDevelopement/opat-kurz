@@ -36,6 +36,7 @@ export default function Lekce({ slug }) {
 							},
 						}
 					);
+					console.log(data);
 					if (data.url) {
 						setPlayUrl(data.url);
 					}
@@ -54,7 +55,7 @@ export default function Lekce({ slug }) {
 
 	return (
 		<>
-			{nacita ? (
+			{!nacita ? (
 				<>
 					<Head>
 						<title>{lekce?.nazev}</title>
