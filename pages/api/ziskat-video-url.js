@@ -3,7 +3,7 @@ import Mux from '@mux/mux-node';
 
 const handler = async (req, res) => {
 	if (req.method === 'POST') {
-		const { slug, userid } = req.body;
+		const { slug, userid } = req.body.data;
 
 		if (!slug) {
 			return res.status(400).json({
@@ -42,7 +42,7 @@ const handler = async (req, res) => {
 				keyId: process.env.MUX_SECRET_KEY_ID,
 				keySecret: process.env.MUX_SECRET_BASE,
 			});
-         
+
 			const videourl = `https://stream.mux.com/${lekce.playback_id}.m3u8?token=${token}`;
 
 			return res.status(200).json({
