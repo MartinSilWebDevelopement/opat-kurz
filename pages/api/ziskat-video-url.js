@@ -17,13 +17,17 @@ const handler = async (req, res) => {
 		}
 
 		const supabase = getServiceSupabase();
-      
-      const { data: profil } = await supabase.from("profil").select("odebira").eq("id", userid).single();
-      if(!profil.odebira) {
-         return res.status(401).json({
+
+		const { data: profil } = await supabase
+			.from('profil')
+			.select('odebira')
+			.eq('id', userid)
+			.single();
+		if (!profil.odebira) {
+			return res.status(401).json({
 				error: 'Tento uživatel nemá aktivní odběr',
 			});
-      }
+		}
 
 		const { data: lekce } = await supabase
 			.from('lekce')
@@ -38,6 +42,7 @@ const handler = async (req, res) => {
 				keyId: process.env.MUX_SECRET_KEY_ID,
 				keySecret: process.env.MUX_SECRET_BASE,
 			});
+         
 			const videourl = `https://stream.mux.com/${lekce.playback_id}.m3u8?token=${token}`;
 
 			return res.status(200).json({

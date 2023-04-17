@@ -1,9 +1,9 @@
-import { getServiceSupabase, supabase } from '@/utils/supabase';
-import Mux from '@mux/mux-node';
+import {  supabase } from '@/utils/supabase';
 import MuxVideo from '@mux/mux-video-react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Lekce({ slug }) {
 	const router = useRouter();
