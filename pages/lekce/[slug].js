@@ -5,9 +5,11 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-export default function Lekce({ slug, url }) {
+export default function Lekce({ slug }) {
 	const router = useRouter();
 	const [lekce, setLekce] = useState(null);
+	const [playUrl, setPlayUrl] = useState(null);
+	const [nacita, setNacita] = useState(true);
 
 	useEffect(() => {
 		const fetchLekceContent = async () => {
@@ -17,9 +19,32 @@ export default function Lekce({ slug, url }) {
 				.eq('slug', slug)
 				.single();
 			if (!error) {
-				setLekce(lekce);
+				const user = await supabase.auth.getUser();
+				if (user.data.user) {
+					const body = {
+						slug: slug,
+						userid: user.data.user.id,
+					};
+
+					const { data } = await axios.post(
+						`${process.env.NEXT_PUBLIC_DOMAIN}/api/ziskat-video-url`,
+						body,
+						{
+							headers: {
+								'Content-Type': 'application/json',
+							},
+						}
+					);
+					if(data.url) {
+						setPlayUrl(data.url);
+					}
+					setLekce(lekce);
+					setNacita(false);
+				} else {
+					router.push('/auth/prihlasit');
+				}
 			} else {
-				router.push('/lekce/error');
+				router.push('/lekce/neexistuje');
 			}
 		};
 
@@ -28,7 +53,7 @@ export default function Lekce({ slug, url }) {
 
 	return (
 		<>
-			{lekce ? (
+			{nacita ? (
 				<>
 					<Head>
 						<title>{lekce.nazev}</title>
@@ -41,8 +66,8 @@ export default function Lekce({ slug, url }) {
 								video_id: lekce.slug,
 								video_title: lekce.nazev,
 							}}
-							src={url}
-							type='hls'
+							src={playUrl}
+							type="hls"
 						/>
 					</div>
 					<div dangerouslySetInnerHTML={{ __html: lekce.obsah }} />
@@ -55,31 +80,7 @@ export default function Lekce({ slug, url }) {
 }
 
 export async function getServerSideProps({ params }) {
-	const slug = params.slug;
-
-	const supabase = getServiceSupabase();
-
-	const { data: lekce } = await supabase
-		.from('lekce')
-		.select('playback_id')
-		.eq('slug', params.slug)
-		.single();
-
-	if (lekce.playback_id) {
-		const playbackId = lekce.playback_id;
-
-		const token = Mux.JWT.signPlaybackId(playbackId, {
-			keyId: process.env.MUX_SECRET_KEY_ID,
-			keySecret: process.env.MUX_SECRET_BASE,
-		});
-		const videourl = `https://stream.mux.com/${lekce.playback_id}.m3u8?token=${token}`
-
-		return {
-			props: { slug: slug, url: videourl },
-		};
-	}
-
 	return {
-		props: { slug: slug },
+		props: { slug: params.slug },
 	};
 }
