@@ -36,7 +36,6 @@ export default function Lekce({ slug }) {
 							},
 						}
 					);
-					console.log(data);
 					if (data.url) {
 						setPlayUrl(data.url);
 					}
