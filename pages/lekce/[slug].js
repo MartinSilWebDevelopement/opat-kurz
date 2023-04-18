@@ -58,6 +58,8 @@ export default function Lekce({ slug }) {
 			.select('id')
 			.eq('slug', slug)
 			.single();
+		console.log('Lekce');
+		console.log(lekce);
 		if (lekce) {
 			const user = await supabase.auth.getUser();
 			if (user.data.user) {
@@ -67,10 +69,15 @@ export default function Lekce({ slug }) {
 					.eq('profil', user.data.user.id)
 					.eq('lekce', lekce.id)
 					.single();
+				console.log('Pokrok');
+				console.log(pokrok);
 				if (!pokrok) {
-					await supabase
+					const res = await supabase
 						.from('pokrok')
-						.insert([{ profil: user.data.user.id }, { lekce: lekce.id }]);
+						.insert([{ profil: user.data.user.id }, { lekce: lekce.id }])
+						.select();
+					console.log('Zapsání');
+					console.log(res);
 				}
 			}
 		}
