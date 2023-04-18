@@ -14,8 +14,8 @@ const Provider = ({ children }) => {
 			const user = await supabase.auth.getUser();
 			if (user.data.user) {
 				const { data: profil } = await supabase
-					.from('profil')
-					.select('*')
+					.from("profil")
+					.select(`*, pokrok("*")`)
 					.eq('id', user.data.user.id)
 					.single();
 
