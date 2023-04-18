@@ -74,7 +74,7 @@ export default function Lekce({ slug }) {
 				if (!pokrok) {
 					const res = await supabase
 						.from('pokrok')
-						.insert([{ profil: user.data.user.id }, { lekce: lekce.id }])
+						.insert([{ profil: user.data.user.id, lekce: lekce.id }])
 						.select();
 					console.log('Zapsání');
 					console.log(res);
