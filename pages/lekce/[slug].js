@@ -52,6 +52,30 @@ export default function Lekce({ slug }) {
 		fetchLekceContent();
 	}, []);
 
+	const handleZhlednuti = async () => {
+		const { data: lekce } = await supabase
+			.from('lekce')
+			.select('id')
+			.eq('slug', slug)
+			.single();
+		if (lekce) {
+			const user = await supabase.auth.getUser();
+			if (user.data.user) {
+				const { data: pokrok } = await supabase
+					.from('pokrok')
+					.select('zhlednuto')
+					.eq('profil', user.data.user.id)
+					.eq('lekce', lekce.id)
+					.single();
+				if (!pokrok) {
+					await supabase
+						.from('pokrok')
+						.insert([{ profil: user.data.user.id }, { lekce: lekce.id }]);
+				}
+			}
+		}
+	};
+
 	return (
 		<>
 			{!nacita ? (
@@ -62,7 +86,7 @@ export default function Lekce({ slug }) {
 					<h1>{lekce?.nazev}</h1>
 					<div style={{ width: '40vw', height: 'auto' }}>
 						<MuxVideo
-							onEnded={() => console.log('dokoukano')}
+							onEnded={() => handleZhlednuti()}
 							controls
 							metadata={{
 								video_id: lekce?.slug,
