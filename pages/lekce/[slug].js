@@ -39,7 +39,7 @@ export default function Lekce({ slug }) {
 					if (data.url) {
 						setPlayUrl(data.url);
 					}
-					
+
 					setNacita(false);
 				} else {
 					router.push('/auth/prihlasit');
@@ -62,6 +62,7 @@ export default function Lekce({ slug }) {
 					<h1>{lekce?.nazev}</h1>
 					<div style={{ width: '40vw', height: 'auto' }}>
 						<MuxVideo
+							onEnded={() => console.log('dokoukano')}
 							controls
 							metadata={{
 								video_id: lekce?.slug,
