@@ -1,27 +1,44 @@
+import { useUzivatel } from '@/context/uzivatel';
 import { supabase } from '@/utils/supabase.js';
 import Link from 'next/link';
-import { useUzivatel } from '@/context/uzivatel';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { BiLinkAlt } from 'react-icons/bi';
 
 export default function Home() {
-	const [lekce, setLekce] = useState([])
+	const [kapitoly, setKapitoly] = useState([]);
+
 	useEffect(() => {
 		const fetchLekce = async () => {
-			const { data: lekce, error } = await supabase.from('lekce').select('*');
-			if(!error) {
-				setLekce(lekce);
+			const { data: kapitola, error } = await supabase
+				.from('kapitola')
+				.select(`*, lekce("*")`);
+			if (!error) {
+				console.log(kapitola);
+				setKapitoly(kapitola);
 			}
-		}
+		};
 		fetchLekce();
-	})
+	});
+
 	return (
 		<section>
-			{lekce.map((l) => (
-				<Link key={l.id} href={"/lekce/" + l.slug}>
+			{kapitoly.map((kapitola) => (
+				<div key={kapitola.id}>
 					<div>
-						<h1>{l.nazev}</h1>
+						<Link href={'/kapitola/' + kapitola.slug}>
+							<BiLinkAlt />
+						</Link>
+						<span>{kapitola.poradi}</span>
+						<h1>{kapitola.nazev}</h1>
 					</div>
-				</Link>
+					<div style={{ display: 'flex', flexDirection: 'column' }}>
+						{kapitola.lekce.map((l) => (
+							<Link key={l.id} href={'/lekce/' + l.slug}>
+								{l.nazev}
+							</Link>
+						))}
+					</div>
+				</div>
 			))}
 		</section>
 	);
