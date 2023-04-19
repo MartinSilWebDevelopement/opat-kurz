@@ -50,7 +50,7 @@ export default function Lekce({ slug }) {
 		};
 
 		fetchLekceContent();
-	}, []);
+	}, [router]);
 
 	const handleZhlednuti = async () => {
 		const { data: lekce } = await supabase

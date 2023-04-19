@@ -30,7 +30,7 @@ export default function Lekce({ slug }) {
 		};
 
 		fetchLekceContent();
-	}, []);
+	}, [router]);
 
 	return (
 		<>

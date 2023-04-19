@@ -26,7 +26,7 @@ export default function Rozcestnik() {
          }
 		};
 		fetchUser();
-	}, []);
+	}, [router]);
 	return (
 		<>
 			<Head>

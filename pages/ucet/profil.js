@@ -15,7 +15,7 @@ export default function Profil() {
 			}
 		};
 		fetchUzivatele();
-	}, []);
+	}, [router]);
 
 	const loadPortal = async () => {
 		const body = {

@@ -1,11 +1,12 @@
-import { useUzivatel } from '@/context/uzivatel';
 import { supabase } from '@/utils/supabase.js';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { BiLinkAlt } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
 export default function Home() {
 	const [kapitoly, setKapitoly] = useState([]);
+	const router = useRouter();
 
 	useEffect(() => {
 		const fetchLekce = async () => {
@@ -18,7 +19,7 @@ export default function Home() {
 			}
 		};
 		fetchLekce();
-	});
+	}, [router]);
 
 	return (
 		<section>
