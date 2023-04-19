@@ -17,11 +17,13 @@ export default function Rozcestnik() {
             if(profil) {
                if(profil.odebira) {
                   router.push("/home");
-               } else if (profil.odebira == false) {
+               } else {
                   router.push("/#pridat-se");
                }
             }
-			}
+			} else {
+            router.push("/auth/prihlasit");
+         }
 		};
 		fetchUser();
 	}, []);
