@@ -32,7 +32,7 @@ export default function Lekce({ slug }) {
 					.eq('id', user.data.user.id)
 					.single();
 				if (profil.odebira) {
-					const { data: kapitola, error } = await supabase
+					const { data: kapitola } = await supabase
 						.from('kapitola')
 						.select(`*, lekce("*")`)
 						.eq('slug', slug)

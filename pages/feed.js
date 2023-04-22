@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BiLinkAlt } from 'react-icons/bi';
+import { TiTick } from 'react-icons/ti';
 
 export default function Feed() {
 	const [kapitoly, setKapitoly] = useState([]);
@@ -42,15 +43,16 @@ export default function Feed() {
 			}
 		};
 		fetchPage();
-	}, [router]);
+	}, []);
 
 	return (
 		<section className={style.sekce}>
 			<Head>
 				<title>Opat04</title>
 			</Head>
+			<Navigation />
 			{isLoading ? (
-				<div style={{ height: '100vh' }}>
+				<div style={{ height: '60vh' }}>
 					<Loading />
 				</div>
 			) : (
@@ -58,7 +60,6 @@ export default function Feed() {
 					{!isLoading && !nacita ? (
 						uzivatel.odebira ? (
 							<>
-								<Navigation />
 								<Progress />
 								<section className={style.kapitoly}>
 									{isLoading ? (
@@ -103,27 +104,37 @@ export default function Feed() {
 																	key={l.id}
 																	href={'/lekce/' + l.slug}
 																>
-																	<div className={style.lekce_oznaceni}>
-																		<span>
-																			{kapitola.poradi}.{l.poradi_v_kapitole}
-																		</span>
+																	<div className={style.lekce_card_text}>
+																		<div className={style.lekce_oznaceni}>
+																			<span>
+																				{kapitola.poradi}.{l.poradi_v_kapitole}
+																			</span>
+																		</div>
+																		<div className={style.lekce_obrazek_area}>
+																			{l.banner_url ? (
+																				<Image
+																					className={style.lekce_obrazek}
+																					src={l.banner_url}
+																					width={96}
+																					height={54}
+																					alt={l.nazev}
+																				/>
+																			) : (
+																				<div className={style.lekce_obrazek}>
+																					?
+																				</div>
+																			)}
+																		</div>
+																		<span>{l.nazev}</span>
 																	</div>
-																	<div className={style.lekce_obrazek_area}>
-																		{l.banner_url ? (
-																			<Image
-																				className={style.lekce_obrazek}
-																				src={l.banner_url}
-																				width={96}
-																				height={54}
-																				alt={l.nazev}
-																			/>
-																		) : (
-																			<div className={style.lekce_obrazek}>
-																				?
-																			</div>
-																		)}
-																	</div>
-																	<span>{l.nazev}</span>
+																	{uzivatel.pokrok.some(
+																		(p) => p.lekce === l.id
+																	) && (
+																		<TiTick
+																			className={style.zobrazeno}
+																			size={30}
+																		/>
+																	)}
 																</Link>
 															))}
 												</div>

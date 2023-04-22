@@ -52,6 +52,18 @@
    border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 .lekce_card {
+   text-decoration: none;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding-right: 30px;
+}
+.zobrazeno {
+   color: var(--clr-green);
+   border: 3px solid var(--clr-green);
+   border-radius: 50%;
+}
+.lekce_card_text {
    display: flex;
    align-items: center;
    gap: 15px;
@@ -64,6 +76,8 @@
 }
 .lekce_card:hover {
    background-color: #dedede;
+   border: 0;
+   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 .lekce_obrazek {
    background-color: gray;
@@ -99,7 +113,7 @@
    padding: 10px 20px;
 }
 .nonpaid {
-   height: 80vh;
+   height: 60vh;
    display: flex;
    align-items: center;
    justify-content: center;
