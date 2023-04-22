@@ -1,8 +1,9 @@
-import { useUzivatel } from "@/context/uzivatel";
-import { TiTick } from "react-icons/ti"
-import Link from 'next/link';
-import initStripe from 'stripe';
+import { useUzivatel } from '@/context/uzivatel';
 import style from '@/styles/Index.module.css';
+import { loadStripe } from '@stripe/stripe-js';
+import Link from 'next/link';
+import { TiTick } from 'react-icons/ti';
+import initStripe from 'stripe';
 
 export default function Predplatit({ plany }) {
 	const { uzivatel, prihlasit, nacita } = useUzivatel();

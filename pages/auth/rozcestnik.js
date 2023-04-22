@@ -19,7 +19,7 @@ export default function Rozcestnik() {
 					if (profil.odebira) {
 						router.push('/feed');
 					} else {
-						router.push('/#pridat-se');
+						router.push('/#pripojit-se');
 					}
 				}
 			} else {
