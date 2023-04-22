@@ -1,5 +1,71 @@
+:root {
+	--clr-main: #0074df;
+	--clr-hover-onwhite: #53a6f4;
+	--clr-text: #121212;
+	--clr-white: #f9f9f9;
+	--clr-desc-onlight: #454545;
+	--clr-desc-ondark: #b7b7b7;
+	--clr-green: green;
+
+	--border-radius: 10px;
+
+	--ef-trans: 250ms ease-in-out;
+}
+@font-face {
+	font-family: Poppins;
+	src: url(../public/fonts/Poppins-Thin.ttf);
+	font-weight: 200;
+	font-display: swap;
+}
+@font-face {
+	font-family: Poppins;
+	src: url(../public/fonts/Poppins-Light.ttf);
+	font-weight: 300;
+	font-display: swap;
+}
+@font-face {
+	font-family: Poppins;
+	src: url(../public/fonts/Poppins-Regular.ttf);
+	font-weight: 400;
+	font-display: swap;
+}
+@font-face {
+	font-family: Poppins;
+	src: url(../public/fonts/Poppins-Medium.ttf);
+	font-weight: 500;
+	font-display: swap;
+}
+@font-face {
+	font-family: Poppins;
+	src: url(../public/fonts/Poppins-SemiBold.ttf);
+	font-weight: 600;
+	font-display: swap;
+}
+@font-face {
+	font-family: Poppins;
+	src: url(../public/fonts/Poppins-Bold.ttf);
+	font-weight: 700;
+	font-display: swap;
+}
+@font-face {
+	font-family: Poppins;
+	src: url(../public/fonts/Poppins-ExtraBold.ttf);
+	font-weight: 800;
+	font-display: swap;
+}
+@font-face {
+	font-family: Poppins;
+	src: url(../public/fonts/Poppins-Black.ttf);
+	font-weight: 900;
+	font-display: swap;
+}
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-family: 'Poppins', sans-serif;
+	scroll-behavior: smooth;
+}
+body {
+	background-color: var(--clr-white);
 }

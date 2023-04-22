@@ -1,0 +1,43 @@
+.sekce {
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+}
+.sekce_box {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+.sekce_box span {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 15px;
+   font-size: 1.7rem;
+   color: var(--clr-desc-onlight);
+}
+.sekce_box h1 {
+   font-size: 3rem;
+}
+.sekce_box a {
+   font-size: 1.5rem;
+   background-color: var(--clr-main);
+   color: var(--clr-white);
+   width: 300px;
+   margin: 0 auto;
+   position: relative;
+   padding: 5px 0;
+   border: 2px solid var(--clr-main);
+   border-radius: var(--border-radius);
+   text-transform: uppercase;
+   text-decoration: none;
+   font-weight: 600;
+   top: 50px;
+   transition: var(--ef-trans);
+}
+.sekce_box a:hover {
+   background-color: var(--clr-white);
+   color: var(--clr-main);
+}

@@ -1,0 +1,133 @@
+.sekce {
+   position: relative;
+   margin: 0 auto;
+   max-width: 1200px;
+   width: 100%;
+   padding: 50px 0;
+}
+.kapitoly {
+   position: relative;
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   gap: 30px;
+}
+.kapitola_nadpis {
+   width: 100%;
+   display: flex;
+   cursor: pointer;
+   align-items: center;
+   background-color: #dedede;
+   color: var(--clr-text);
+   border: 0;
+   border-radius: var(--border-radius);
+}
+.kapitola_nadpis span {
+   font-weight: 700;
+}
+.kapitola_nadpis h1 {
+   font-weight: 400;
+}
+.kapitola_nadpis a {
+   color: var(--clr-text);
+   text-decoration: none;
+   transition: var(--ef-trans);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 10px 0 10px 20px;
+}
+
+.kapitola_nadpis a:hover {
+   color: var(--clr-main);
+}
+.kapitola_nadpis span, .kapitola_nadpis h1 {
+   font-size: 1.7rem;
+}
+.lekce_area {
+   display: flex;
+   flex-direction: column;
+   background-color: rgb(234, 234, 234);
+   border: 0;
+   border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+.lekce_card {
+   display: flex;
+   align-items: center;
+   gap: 15px;
+   padding: 20px 20px;
+   text-decoration: none;
+   color: var(--clr-text);
+   border: 0;
+   border-radius: 0 0 var(--border-radius) var(--border-radius);
+   transition: var(--ef-trans);
+}
+.lekce_card:hover {
+   background-color: #dedede;
+}
+.lekce_obrazek {
+   background-color: gray;
+   width: 96px;
+   height: 54px;
+   border: 0;
+   border-radius: var(--border-radius);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 1.5rem;
+   font-weight: 700;
+   color: var(--clr-white);
+   text-decoration: none;
+}
+.lekce_oznaceni {
+   position: relative;
+   width: 20px;
+}
+.horni_panel {
+   display: flex;
+   width: 100%;
+   position: relative;
+   justify-content: space-between;
+   align-items: center;
+}
+.kapitola_nazev {
+   display: flex;
+   align-items: center;
+   gap: 15px;
+   height: 100%;
+   width: 100%;
+   padding: 10px 20px;
+}
+.nonpaid {
+   height: 80vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+.nonpaid_box {
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 20px;
+   justify-content: center;
+}
+.nonpaid_box a {
+   font-size: 1.2rem;
+   color: var(--clr-white);
+   background-color: var(--clr-main);
+   padding: 7px 25px;
+   border: 2px solid var(--clr-main);
+   font-weight: 600;
+   text-transform: uppercase;
+   text-decoration: none;
+   border-radius: var(--border-radius);
+   transition: var(--ef-trans);
+}
+.nonpaid_box a:hover {
+   background-color: var(--clr-white);
+   color: var(--clr-main);
+}
+.nonpaid_box h1 {
+   font-size: 1.5rem;
+}

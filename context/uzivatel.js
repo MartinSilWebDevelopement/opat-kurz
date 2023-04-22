@@ -14,7 +14,7 @@ const Provider = ({ children }) => {
 			const user = await supabase.auth.getUser();
 			if (user.data.user) {
 				const { data: profil } = await supabase
-					.from("profil")
+					.from('profil')
 					.select(`*, pokrok("*")`)
 					.eq('id', user.data.user.id)
 					.single();
@@ -28,7 +28,7 @@ const Provider = ({ children }) => {
 		};
 
 		ziskatUzivatelskyProfil();
-	}, [router]);
+	}, []);
 
 	useEffect(() => {
 		if (uzivatel) {
@@ -54,14 +54,26 @@ const Provider = ({ children }) => {
 		}
 	}, [uzivatel]);
 
-	const prihlasit = async () => {
+	const prihlasit = async (path) => {
+		var url = '/auth/rozcestnik';
+		if (path == 'rozcestnik') {
+			url = '/auth/rozcestnik';
+		} else {
+			url = '/predplatit';
+		}
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
+			options: {
+				redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}${url}`,
+			},
 		});
 	};
 	const odhlasit = async () => {
-		await supabase.auth.signOut();
-		setUzivatel(null);
+		const res = await supabase.auth.signOut();
+		console.log(res);
+		if(res.error == null) {
+			setUzivatel(null);
+		}
 		router.push('/');
 	};
 

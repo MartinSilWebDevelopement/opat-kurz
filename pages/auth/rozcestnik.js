@@ -1,3 +1,4 @@
+import Loading from '@/components/loading';
 import { supabase } from '@/utils/supabase';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -14,16 +15,16 @@ export default function Rozcestnik() {
 					.select('odebira')
 					.eq('id', user.data.user.id)
 					.single();
-            if(profil) {
-               if(profil.odebira) {
-                  router.push("/home");
-               } else {
-                  router.push("/#pridat-se");
-               }
-            }
+				if (profil) {
+					if (profil.odebira) {
+						router.push('/feed');
+					} else {
+						router.push('/#pridat-se');
+					}
+				}
 			} else {
-            router.push("/auth/prihlasit");
-         }
+				router.push('/auth/prihlasit');
+			}
 		};
 		fetchUser();
 	}, [router]);
@@ -32,7 +33,9 @@ export default function Rozcestnik() {
 			<Head>
 				<title>Přihlašování...</title>
 			</Head>
-         <h1>Přihlašování...</h1>
+			<div style={{height: "100vh"}}>
+				<Loading />
+			</div>
 		</>
 	);
 }

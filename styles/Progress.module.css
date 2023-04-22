@@ -1,0 +1,41 @@
+.sekce {
+	background-color: #dedede;
+	width: 100%;
+	position: relative;
+	padding: 50px;
+	height: 150px;
+	display: flex;
+	align-items: center;
+	margin: 50px auto;
+	border: 0;
+	border-radius: var(--border-radius);
+}
+.progress {
+	display: grid;
+   width: 100%;
+   grid-template-columns: repeat(7, 1fr);
+   align-items: center;
+   justify-content: space-between;
+}
+.number h2 {
+	font-size: 3rem;
+}
+.progress_bar {
+	display: flex;
+   background-color: rgb(136, 136, 136);
+   grid-column: span 6;
+   height: 10px;
+   width: 100%;
+   border: 0;
+   border-radius: 5px;
+	align-items: center;
+   position: relative;
+	justify-content: space-between;
+}
+.progress_width {
+   height: 100%;
+   background-color: green;
+   position: relative;
+   border: 0;
+   border-radius: 5px;
+}

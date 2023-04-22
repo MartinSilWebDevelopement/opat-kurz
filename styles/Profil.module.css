@@ -1,0 +1,52 @@
+.sekce {
+   width: 100%;
+   max-width: 1200px;
+   margin: 0 auto;
+   position: relative;
+   padding: 50px 0;
+}
+.profil_karta {
+   position: relative;
+   top: 100px;
+}
+.profil_karta h1 {
+   font-size: 2.5rem;
+   padding-bottom: 20px;
+}
+.karta_info {
+   padding: 30px;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   width: 500px;
+   gap: 10px;
+   border: 2px solid var(--clr-desc-ondark);
+   border-radius: var(--border-radius);
+}
+.karta_info p,.karta_info span {
+   font-size: 1.2rem;
+}
+.ano {
+   color: var(--clr-main);
+   font-weight: 700;
+}
+.ne {
+   color: red;
+   font-weight: 700;
+}
+.karta_info button {
+   margin-top: 20px;
+   color: var(--clr-white);
+   background-color: var(--clr-main);
+   font-size: 1.3rem;
+   padding: 10px 0;
+   border: 2px solid var(--clr-main);
+   font-weight: 600;
+   border-radius: var(--border-radius);
+   cursor: pointer;
+   transition: var(--ef-trans);
+}
+.karta_info button:hover {
+   background-color: var(--clr-white);
+   color: var(--clr-main);
+}

@@ -25,8 +25,8 @@ const handler = async (req, res) => {
 			mode: 'subscription',
 			payment_method_types: ['card'],
 			line_items: lineItems,
-			success_url: `${process.env.NEXT_PUBLIC_DOMAIN}/uspesne-predplaceno`,
-			cancel_url: `${process.env.NEXT_PUBLIC_DOMAIN}/objednavka-zrusena`,
+			success_url: `${process.env.NEXT_PUBLIC_DOMAIN}/predplatne/zaplaceno`,
+			cancel_url: `${process.env.NEXT_PUBLIC_DOMAIN}/predplatne/zruseno`,
 		});
 
 		return res.status(200).json({ sessionid: session.id });

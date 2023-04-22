@@ -1,13 +1,21 @@
+import Loading from '@/components/loading';
 import { useUzivatel } from '@/context/uzivatel';
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Prihlasit() {
 	const { odhlasit } = useUzivatel();
-	const router = useRouter()
+	const router = useRouter();
 	useEffect(() => {
-		odhlasit();
+		const fetchLogout = async () => {
+			await odhlasit();
+		};
+		fetchLogout();
 	}, [router]);
 
-	return <h1>Probíhá odhlašování</h1>;
+	return (
+		<div style={{height: "100vh"}}>
+			<Loading />
+		</div>
+	);
 }

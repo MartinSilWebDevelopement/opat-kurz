@@ -1,0 +1,74 @@
+.header {
+   display: flex;
+   width: 100%;
+   padding: 0px 5%;
+   height: 60px;
+   align-items: center;
+   justify-content: space-between;
+}
+.header a {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   color: var(--clr-text);
+   text-decoration: none;
+   font-weight: 600;
+   font-size: 1.2rem;
+   transition: var(--ef-trans);
+}
+.header a:hover {
+   color: var(--clr-main);
+}
+.header span {
+   color: var(--clr-text);
+   font-weight: 700;
+   font-size: 2rem;
+}
+
+.loginbox_area {
+   height: calc(100vh - 60px);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.loginbox {
+   padding: 50px;
+   background-color: #dedede;
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   border-radius: var(--border-radius);
+   text-align: center;
+}
+.loginbox h1 {
+   color: var(--clr-text);
+   font-size: 2rem;
+   display: flex;
+   gap: 5px;
+}
+.loginbox h1 span {
+   color: var(--clr-desc-onlight);
+}
+.loginbox button {
+   font-size: 0.9rem;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 10px;
+   padding: 15px;
+   cursor: pointer;
+   border: 2px solid var(--clr-desc-ondark);
+   border-radius: 50px;
+   font-weight: 600;
+   transition: var(--ef-trans);
+}
+.loginbox button img {
+   width: 25px;
+   height: auto;
+}
+.loginbox button:hover {
+   background-color: var(--clr-white);
+}
+.header a, .header div {
+   width: 200px;
+}

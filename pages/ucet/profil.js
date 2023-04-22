@@ -1,5 +1,9 @@
+import Loading from '@/components/loading';
+import Navigation from '@/components/navigation';
 import { useUzivatel } from '@/context/uzivatel';
+import styles from '@/styles/Profil.module.css';
 import { supabase } from '@/utils/supabase';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -15,37 +19,52 @@ export default function Profil() {
 			}
 		};
 		fetchUzivatele();
-	}, [router]);
+	}, []);
 
 	const loadPortal = async () => {
 		const body = {
-			uzivatel: uzivatel.stripe_customer_id
-		}
+			uzivatel: uzivatel.stripe_customer_id,
+		};
 		const res = await fetch('/api/nacist-stripe-portal', {
 			method: 'POST',
 			headers: {
-				"Content-Type": "application/json"
+				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(body)
+			body: JSON.stringify(body),
 		});
 		const data = await res.json();
 		router.push(data.url);
-	}
+	};
 
 	return (
 		<section>
+			<Head>
+				<title>Uživatelský profil</title>
+			</Head>
 			{nacita ? (
-				<div>
-					<h1>Načítání...</h1>
+				<div style={{ height: '100vh' }}>
+					<Loading />
 				</div>
 			) : (
-				<div style={{ display: "flex", flexDirection: "column", gap: "20px"}}>
-					<h1>Uživatelský profil</h1>
-					<p>Aktivní předplatné <b>{uzivatel.odebira ? "Ano" : "Ne"}</b></p>
-					<span>{uzivatel?.jmeno}</span>
-					<span>{uzivatel?.email}</span>
-					<button onClick={loadPortal}>Spravovat předplatné</button>
-				</div>
+				<section className={styles.sekce}>
+					<Navigation />
+					<div className={styles.profil_karta}>
+						<h1>Uživatelský profil</h1>
+						<div className={styles.karta_info}>
+							<p>
+								Aktivní předplatné:{' '}
+								{uzivatel?.odebira ? (
+									<span className={styles.ano}>Ano</span>
+								) : (
+									<span className={styles.ne}>Ne</span>
+								)}
+							</p>
+							<span>{uzivatel?.jmeno}</span>
+							<span>{uzivatel?.email}</span>
+							<button onClick={loadPortal}>Spravovat předplatné</button>
+						</div>
+					</div>
+				</section>
 			)}
 		</section>
 	);

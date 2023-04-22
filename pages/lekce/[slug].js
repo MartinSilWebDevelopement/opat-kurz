@@ -1,3 +1,6 @@
+import Loading from '@/components/loading';
+import Navigation from '@/components/navigation';
+import styles from '@/styles/Lekce.module.css';
 import { supabase } from '@/utils/supabase';
 import MuxVideo from '@mux/mux-video-react';
 import axios from 'axios';
@@ -13,44 +16,54 @@ export default function Lekce({ slug }) {
 
 	useEffect(() => {
 		const fetchLekceContent = async () => {
-			const { data: lekce, error } = await supabase
-				.from('lekce')
-				.select(`*`)
-				.eq('slug', slug)
-				.single();
-			if (!error) {
-				setLekce(lekce);
-				const user = await supabase.auth.getUser();
-				if (user.data.user) {
-					const { data } = await axios.post(
-						'/api/ziskat-video-url',
-						{
-							data: {
-								slug: slug,
-								userid: user.data.user.id,
-							},
-						},
-						{
-							headers: {
-								'Content-Type': 'application/json',
-							},
-						}
-					);
-					if (data.url) {
-						setPlayUrl(data.url);
-					}
+			const user = await supabase.auth.getUser();
+			if (user.data.user) {
+				const { data: profil } = await supabase
+					.from('profil')
+					.select('odebira')
+					.eq('id', user.data.user.id)
+					.single();
 
-					setNacita(false);
+				if (profil.odebira) {
+					const { data: lekce, error } = await supabase
+						.from('lekce')
+						.select(`*`)
+						.eq('slug', slug)
+						.single();
+					if (!error) {
+						setLekce(lekce);
+						const { data } = await axios.post(
+							'/api/ziskat-video-url',
+							{
+								data: {
+									slug: slug,
+									userid: user.data.user.id,
+								},
+							},
+							{
+								headers: {
+									'Content-Type': 'application/json',
+								},
+							}
+						);
+						if (data.url) {
+							setPlayUrl(data.url);
+						}
+
+						setNacita(false);
+					} else {
+						router.push('/lekce/neexistuje');
+					}
 				} else {
-					router.push('/auth/prihlasit');
+					router.push('/feed');
 				}
 			} else {
-				router.push('/lekce/neexistuje');
+				router.push('/auth/prihlasit');
 			}
 		};
 
 		fetchLekceContent();
-	}, [router]);
+	}, [router, slug]);
 
 	const handleZhlednuti = async () => {
 		const { data: lekce } = await supabase
@@ -78,16 +91,18 @@ export default function Lekce({ slug }) {
 
 	return (
 		<>
+			<Head>
+				{nacita ? <title>Načítání lekce</title> : <title>{lekce?.nazev}</title>}
+			</Head>
 			{!nacita ? (
-				<>
-					<Head>
-						<title>{lekce?.nazev}</title>
-					</Head>
+				<section className={styles.sekce}>
+					<Navigation />
 					<h1>{lekce?.nazev}</h1>
-					<div style={{ width: '40vw', height: 'auto' }}>
+					<div className={styles.video_area}>
 						<MuxVideo
 							onEnded={() => handleZhlednuti()}
 							controls
+							streamType="on-demand"
 							metadata={{
 								video_id: lekce?.slug,
 								video_title: lekce?.nazev,
@@ -96,10 +111,15 @@ export default function Lekce({ slug }) {
 							type="hls"
 						/>
 					</div>
-					<div dangerouslySetInnerHTML={{ __html: lekce?.obsah }} />
-				</>
+					<div
+						className={styles.obsah}
+						dangerouslySetInnerHTML={{ __html: lekce?.obsah }}
+					/>
+				</section>
 			) : (
-				<p>Načítá se</p>
+				<div style={{ height: '100vh' }}>
+					<Loading />
+				</div>
 			)}
 		</>
 	);

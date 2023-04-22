@@ -12,7 +12,7 @@ const handler = async (req, res) => {
 
       const session = await stripe.billingPortal.sessions.create({
          customer: uzivatel,
-         return_url: `${process.env.NEXT_PUBLIC_DOMAIN}/uzivatel/profil`
+         return_url: `${process.env.NEXT_PUBLIC_DOMAIN}/ucet/profil`
       })
 
 		return res.status(200).json({ url: session.url });
