@@ -44,6 +44,7 @@ const Provider = ({ children }) => {
 					},
 					(payload) => {
 						setUzivatel({ ...uzivatel, ...payload.new });
+						router.reload()
 					}
 				)
 				.subscribe();
